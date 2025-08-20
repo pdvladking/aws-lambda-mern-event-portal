@@ -1,0 +1,152 @@
+const ClassicForm = ({ handleChange, handleSubmit }) => (
+  <form
+    onSubmit={handleSubmit}
+    className="bg-gray-100 border border-gray-400 rounded-md p-8 space-y-6 max-w-3xl mx-auto"
+  >
+    <h1 className="text-3xl font-serif text-gray-800 text-center">
+      Classic Event Setup
+    </h1>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <input
+        name="title"
+        placeholder="Event Title (e.g. Drone Expo 2025)"
+        onChange={handleChange}
+        className="px-4 py-2 border border-gray-500 rounded-sm focus:outline-none focus:ring-1 focus:ring-gray-600 text-sm bg-white"
+      />
+      <input
+        name="date"
+        type="date"
+        onChange={handleChange}
+        className="px-4 py-2 border border-gray-500 rounded-sm focus:outline-none focus:ring-1 focus:ring-gray-600 text-sm bg-white"
+      />
+    </div>
+
+    <input
+      name="banner"
+      type="file"
+      accept="image/*"
+      onChange={handleChange}
+      className="w-full px-4 py-2 border border-gray-500 rounded-sm text-sm bg-white"
+    />
+
+    <textarea
+      name="description"
+      placeholder="Describe the event purpose, audience, and theme"
+      onChange={handleChange}
+      rows={3}
+      className="w-full px-4 py-2 border border-gray-500 rounded-sm focus:outline-none focus:ring-1 focus:ring-gray-600 text-sm bg-white"
+    />
+
+    <textarea
+      name="purpose"
+      placeholder="What is the goal or mission of this event?"
+      onChange={handleChange}
+      rows={3}
+      className="w-full px-4 py-2 border border-gray-500 rounded-sm focus:outline-none focus:ring-1 focus:ring-gray-600 text-sm bg-white"
+    />
+
+    <div className="space-y-4">
+      {[0, 1, 2, 3].map((i) => (
+        <div key={i} className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <input
+            name={`speakers[${i}].name`}
+            placeholder={`Speaker ${i + 1} Name`}
+            onChange={handleChange}
+            className="px-4 py-2 border border-gray-500 rounded-sm text-sm bg-white"
+          />
+          <input
+            name={`speakers[${i}].designation`}
+            placeholder="Designation (e.g. CTO, DGCA)"
+            onChange={handleChange}
+            className="px-4 py-2 border border-gray-500 rounded-sm text-sm bg-white"
+          />
+          <input
+            name={`speakers[${i}].photo`}
+            type="file"
+            accept="image/*"
+            onChange={handleChange}
+            className="px-4 py-2 border border-gray-500 rounded-sm text-sm bg-white"
+          />
+        </div>
+      ))}
+    </div>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <input
+        name="agenda[0].title"
+        placeholder="Agenda Item Title (e.g. Keynote)"
+        onChange={handleChange}
+        className="px-4 py-2 border border-gray-500 rounded-sm text-sm bg-white"
+      />
+      <input
+        name="agenda[0].time"
+        placeholder="Time (e.g. 10:00 AM)"
+        onChange={handleChange}
+        className="px-4 py-2 border border-gray-500 rounded-sm text-sm bg-white"
+      />
+    </div>
+
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {[0, 1, 2, 3, 4].map((i) => (
+        <input
+          key={i}
+          name={`partners[${i}]`}
+          placeholder={`Partner ${i + 1} Name or Logo URL`}
+          onChange={handleChange}
+          className="px-4 py-2 border border-gray-500 rounded-sm text-sm bg-white"
+        />
+      ))}
+    </div>
+
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {[0, 1, 2].map((i) => (
+        <input
+          key={i}
+          name={`videos[${i}]`}
+          placeholder="YouTube Embed Link"
+          onChange={handleChange}
+          className="px-4 py-2 border border-gray-500 rounded-sm text-sm bg-white"
+        />
+      ))}
+    </div>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <input
+        name="organizer.name"
+        placeholder="Organizer Name"
+        onChange={handleChange}
+        className="px-4 py-2 border border-gray-500 rounded-sm text-sm bg-white"
+      />
+      <input
+        name="organizer.email"
+        placeholder="Organizer Email"
+        onChange={handleChange}
+        className="px-4 py-2 border border-gray-500 rounded-sm text-sm bg-white"
+      />
+      <input
+        name="organizer.whatsapp"
+        placeholder="WhatsApp Number"
+        onChange={handleChange}
+        className="px-4 py-2 border border-gray-500 rounded-sm text-sm bg-white"
+      />
+    </div>
+
+    <textarea
+      name="organizer.message"
+      placeholder="Message for attendees or registration info"
+      onChange={handleChange}
+      rows={2}
+      className="w-full px-4 py-2 border border-gray-500 rounded-sm text-sm bg-white"
+    />
+
+    <button
+      type="submit"
+      className="w-full py-3 bg-gray-700 text-white font-medium rounded-sm hover:bg-gray-800 transition text-sm"
+    >
+      Create Event
+    </button>
+  </form>
+);
+
+export default ClassicForm;
