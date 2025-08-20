@@ -1,17 +1,37 @@
-import mongoose from "mongoose";
+// models/Event.js
+const mongoose = require("mongoose");
 
-const eventSchema = new mongoose.Schema(
+const EventSchema = new mongoose.Schema(
   {
-    title: String,
-    date: Date,
-    description: String,
-    speakers: [{ name: String, bio: String, image: String }],
-    agenda: [{ time: String, topic: String }],
-    partners: [{ name: String, logo: String }],
-    gallery: [String],
-    contactEmail: String,
+    template: { type: String, required: true },
+    title: { type: String, required: true },
+    date: { type: Date, required: true },
+    bannerImage: { type: String },
+    description: { type: String },
+    purpose: { type: String },
+    speakers: [
+      {
+        name: String,
+        designation: String,
+        photo: String,
+      },
+    ],
+    agenda: [
+      {
+        title: String,
+        time: String,
+      },
+    ],
+    partners: [String],
+    videos: [String],
+    organizer: {
+      name: String,
+      email: String,
+      whatsapp: String,
+      message: String,
+    },
   },
   { timestamps: true }
 );
 
-export default mongoose.model("Event", eventSchema);
+module.exports = mongoose.model("Event", EventSchema);

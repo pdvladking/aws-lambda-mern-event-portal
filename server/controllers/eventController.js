@@ -1,17 +1,43 @@
-import Event from "../models/Event.js";
+// controllers/eventController.js
+const Event = require("../models/Event");
 
-export const getAllEvents = async (req, res) => {
-  const events = await Event.find();
-  res.json(events);
+exports.createEvent = async (req, res) => {
+  try {
+    const event = new Event(req.body);
+    await event.save();
+    res.status(201).json(event);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 };
 
-export const getEventById = async (req, res) => {
-  const event = await Event.findById(req.params.id);
-  event ? res.json(event) : res.status(404).json({ message: "Not found" });
+exports.getAllEvents = async (req, res) => {
+  try {
+    const events = await Event.find();
+    res.json(events);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
-export const createEvent = async (req, res) => {
-  const newEvent = new Event(req.body);
-  const saved = await newEvent.save();
-  res.status(201).json(saved);
+exports.getEventById = async (req, res) => {
+  try {
+    const event = await Event.findById(req.params.id);
+    if (!event) return res.status(404).json({ error: "Event not found" });
+    res.json(event);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.updateEvent = async (req, res) => {
+  try {
+    const event = await Event.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!event) return res.status(404).json({ error: "Event not found" });
+    res.json(event);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 };
