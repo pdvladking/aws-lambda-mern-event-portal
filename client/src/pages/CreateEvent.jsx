@@ -41,9 +41,18 @@ const CreateEvent = () => {
     } else if (name.includes('[')) {
       const [field, index] = name.match(/(\w+)\[(\d+)\]/).slice(1, 3);
       const subfield = name.split('.').pop();
+
+      const defaultShape = {
+        speakers: { name: '', title: '', image: '' },
+        agenda: { time: '', title: '' },
+        partners: { name: '', logo: '' },
+        videos: { url: '', title: '' },
+      };
+
       const updated = [...(form[field] || [])];
-      if (!updated[index]) updated[index] = {};
-      updated[index][subfield] = val;
+      const base = defaultShape[field] || {};
+      updated[index] = { ...base, ...updated[index], [subfield]: val };
+
       setForm((prev) => ({ ...prev, [field]: updated }));
     } else {
       setForm((prev) => ({ ...prev, [name]: val }));
