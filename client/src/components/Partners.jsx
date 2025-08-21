@@ -1,17 +1,45 @@
-const Partners = ({ partners = [] }) => (
-  <section>
-    <h2>Partners</h2>
-    {partners.length === 0 ? (
-      <p>No partners listed.</p>
-    ) : (
-      partners.map((p, i) => (
-        <div key={i}>
-          <p>{p.name}</p>
-          {p.logo && <img src={p.logo} alt={p.name} />}
-        </div>
-      ))
-    )}
-  </section>
-);
+import { useState } from 'react';
 
-export default Partners;
+const PartnerForm = () => {
+  const [partners, setPartners] = useState([{ name: '', logo: '' }]);
+
+  const addPartner = () => {
+    setPartners((prev) => [...prev, { name: '', logo: '' }]);
+  };
+
+  const handlePartnerChange = (index, field, value) => {
+    const updated = [...partners];
+    updated[index] = { ...updated[index], [field]: value };
+    setPartners(updated);
+  };
+
+  return (
+    <section>
+      <h2>Partners</h2>
+
+      {partners.map((p, i) => (
+        <div key={i} style={{ marginBottom: '1rem' }}>
+          <input
+            type="text"
+            value={p?.name ?? ''}
+            onChange={(e) => handlePartnerChange(i, 'name', e.target.value)}
+            placeholder={`Partner ${i + 1} Name`}
+            style={{ marginRight: '0.5rem' }}
+          />
+          <input
+            type="text"
+            value={p?.logo ?? ''}
+            onChange={(e) => handlePartnerChange(i, 'logo', e.target.value)}
+            placeholder={`Partner ${i + 1} Logo URL`}
+          />
+        </div>
+      ))}
+
+      <button type="button" onClick={addPartner}>
+        Add Partner
+      </button>
+    </section>
+  );
+};
+
+export default PartnerForm;
