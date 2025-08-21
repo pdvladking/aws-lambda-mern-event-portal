@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import ClassicForm from './ClassicForm';
 import ModernForm from './ModernForm';
 import EventPreview from '../components/EventPreview';
-
+import { createEvent } from '../api';
 const CreateEvent = () => {
   const selectedTemplate =
     localStorage.getItem('selectedTemplate') || 'classic';
@@ -63,18 +63,11 @@ const CreateEvent = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch(
-        'https://your-api-id.execute-api.region.amazonaws.com/dev/create-event',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(form),
-        }
-      );
+      const res = await createEvent(form);
+      const data = res.data;
 
-      const data = await res.json();
-      if (data.success && data.eventId) {
-        navigate(`/event/${data.eventId}`);
+      if (data._id || data.eventId) {
+        navigate(`/event/${data._id || data.eventId}`);
       } else {
         console.error('Event creation failed:', data);
       }
