@@ -4,6 +4,7 @@ import ClassicForm from './ClassicForm';
 import ModernForm from './ModernForm';
 import EventPreview from '../components/EventPreview';
 import { createEvent } from '../api';
+
 const CreateEvent = () => {
   const selectedTemplate =
     localStorage.getItem('selectedTemplate') || 'classic';
@@ -13,7 +14,7 @@ const CreateEvent = () => {
     template: selectedTemplate,
     title: '',
     date: '',
-    banner: '',
+    bannerImage: '',
     description: '',
     purpose: '',
     speakers: [],
@@ -43,7 +44,7 @@ const CreateEvent = () => {
       const subfield = name.split('.').pop();
 
       const defaultShape = {
-        speakers: { name: '', title: '', image: '' },
+        speakers: { name: '', designation: '', photo: '' },
         agenda: { time: '', title: '' },
         partners: { name: '', logo: '' },
         videos: { url: '', title: '' },
@@ -62,8 +63,53 @@ const CreateEvent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Convert partners array of objects into array of strings (extract first string value)
+    const partnersStrings = form.partners
+      .map((partner) => {
+        if (typeof partner === 'object' && partner !== null) {
+          return (
+            Object.values(partner).find(
+              (v) => typeof v === 'string' && v.trim() !== ''
+            ) || ''
+          );
+        }
+        return partner;
+      })
+      .filter(Boolean);
+
+    // Convert videos array of objects into array of strings (extract first string value)
+    const videosStrings = form.videos
+      .map((video) => {
+        if (typeof video === 'object' && video !== null) {
+          return (
+            Object.values(video).find(
+              (v) => typeof v === 'string' && v.trim() !== ''
+            ) || ''
+          );
+        }
+        return video;
+      })
+      .filter(Boolean);
+
+    const payload = {
+      ...form,
+      date: new Date(form.date).toISOString(),
+      bannerImage: form.bannerImage || '',
+      purpose: form.purpose || '',
+      partners: partnersStrings,
+      videos: videosStrings,
+      organizer: {
+        name: form.organizer.name || '',
+        email: form.organizer.email || '',
+        whatsapp: form.organizer.whatsapp || '',
+        message: form.organizer.message || '',
+      },
+    };
+
+    console.log('📦 Submitting payload:', payload);
+
     try {
-      const res = await createEvent(form);
+      const res = await createEvent(payload);
       const data = res.data;
 
       if (data._id || data.eventId) {
@@ -72,7 +118,7 @@ const CreateEvent = () => {
         console.error('Event creation failed:', data);
       }
     } catch (err) {
-      console.error('Submission error:', err);
+      console.error('❌ Submission error:', err);
     }
   };
 
