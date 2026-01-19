@@ -1,22 +1,32 @@
-# Event Portal 🎟️
+# Project Title
 
-A full-stack event management system built with the MERN stack and AWS Lambda logic. Designed for modularity, RSVP flow, and solo execution under pressure. This isn’t just a portal—it’s a tactical deployment.
+## 🚀 Live Demo
+[https://aws-lambda-mern-event-portal.vercel.app/]
+
+## 📖 Description
+Brief overview of what the project does and why you built it.
 
 ## 🛠 Tech Stack
+- Frontend: React, Tailwind
+- Backend: Node.js, Express
+- Database: MongoDB
+- Deployment: Vercel
 
-- **Frontend**: React + Tailwind  
-- **Backend**: Node.js + Express  
-- **Database**: MongoDB  
-- **Cloud Logic**: AWS Lambda  
-- **Deployment**: Vercel / Render
+## ⚙️ Features
+- User authentication (JWT)
+- CRUD operations
+- Responsive UI
+- Error handling
 
-## 🎯 Features
+## 📂 Project Structure
+Explain key folders/files:
+- `/client` → React frontend
+- `/server` → Express backend
+- `/models` → MongoDB schemas
 
-- Dynamic event creation and RSVP flow  
-- Template selector for event branding  
-- Real-time updates and modular routing  
-- Admin logic for managing attendees and visibility
-- 
-## 🔗 Live Site
-
-[https://aws-lambda-mern-event-portal.vercel.app](https://aws-lambda-mern-event-portal.vercel.app)
+## 🧪 How to Run Locally
+```bash
+git clone <repo-url>
+cd project-folder
+npm install
+npm start
